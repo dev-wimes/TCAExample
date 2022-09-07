@@ -5,9 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Effects",
-    platforms: [
-        .iOS(.v15)
-    ],
+    platforms: [.iOS(.v15)],
     products: [
         .library(name: "Effects", type: .dynamic, targets: ["Effects"]),
     ],

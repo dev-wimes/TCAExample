@@ -13,8 +13,8 @@ public struct A2View: View {
     let store: Store<A2State, A2Action>
     
     public var body: some View {
-        WithViewStore(self.store){ viewStore in
-            VStack{
+        WithViewStore(self.store) { viewStore in
+            VStack {
                 Text("\(viewStore.resultString)")
             }
             .navigationTitle("A2")

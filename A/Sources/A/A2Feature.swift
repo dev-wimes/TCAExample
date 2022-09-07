@@ -8,23 +8,23 @@
 import Effects
 import ComposableArchitecture
 
-public struct A2State: Equatable{
+public struct A2State: Equatable {
     var resultString: String
 }
 
-public enum A2Action: Equatable{
+public enum A2Action: Equatable {
     case onAppear
     case dataLoaded(Result<String, ApiError>)
 }
 
-public struct A2Environment{
+public struct A2Environment {
     var request: () -> Effect<String, ApiError>
     var mainQueue: () -> AnySchedulerOf<DispatchQueue>
     
     public init(
         request: @escaping () -> Effect<String, ApiError>,
         mainQueue: @escaping () -> AnySchedulerOf<DispatchQueue>
-    ){
+    ) {
         self.request = request
         self.mainQueue = mainQueue
     }
@@ -34,8 +34,8 @@ public let a2Reducer = Reducer<
     A2State,
     A2Action,
     A2Environment
->{ state, action, environment in
-    switch action{
+> { state, action, environment in
+    switch action {
     case .onAppear:
         return environment.request()
             .receive(on: environment.mainQueue())

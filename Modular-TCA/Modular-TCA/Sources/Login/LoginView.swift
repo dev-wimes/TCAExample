@@ -14,7 +14,7 @@ struct LoginView: View {
     
     var body: some View {
         WithViewStore(self.store){ viewStore in
-            VStack{
+            VStack {
                 Button {
                     viewStore.send(.logIn(.success("wimes")))
                 } label: {
@@ -24,9 +24,3 @@ struct LoginView: View {
         }
     }
 }
-
-//struct LoginView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoginView()
-//    }
-//}

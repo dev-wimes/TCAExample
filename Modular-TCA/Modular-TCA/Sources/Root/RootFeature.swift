@@ -7,20 +7,20 @@
 
 import ComposableArchitecture
 
-enum RootState: Equatable{
+enum RootState: Equatable {
     case login(LoginState)
     case tabBar(TabBarState)
     
-    public init() { self = .login(.init())}
+    public init() { self = .login(.init()) }
 }
 
 
-enum RootAction{
+enum RootAction {
     case loginAction(LoginAction)
     case tabBarAction(TabBarAction)
 }
 
-struct RootEnvironment{}
+struct RootEnvironment { }
 
 let rootReducer = Reducer<
     RootState,
@@ -30,14 +30,14 @@ let rootReducer = Reducer<
     loginReducer.pullback(
         state: /RootState.login,
         action: /RootAction.loginAction,
-        environment: {_ in LoginEnvironmnet()}
+        environment: { _ in LoginEnvironmnet() }
     ),
     tabBarReducer.pullback(
         state: /RootState.tabBar,
         action: /RootAction.tabBarAction,
-        environment: {_ in TabBarEnvironmnet()}
+        environment: { _ in TabBarEnvironmnet() }
     ),
-    Reducer{ state, action, _ in
+    Reducer { state, action, _ in
         switch action {
         case .loginAction(.logIn(.success(let response))):
             state = .tabBar(.init(loginData: response))

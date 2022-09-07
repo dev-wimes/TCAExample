@@ -15,18 +15,18 @@ struct TabBarView: View {
     let store: Store<TabBarState, TabBarAction>
     
     var body: some View {
-        WithViewStore(self.store){ viewStore in
-            TabView{
+        WithViewStore(self.store) { viewStore in
+            TabView {
                 A1View(store: self.store.scope(
                     state: \.a1State,
                     action: TabBarAction.a1Action
                 ))
-                    .tabItem {
-                        Image(systemName: "list.dash")
-                        Text("A")
-                    }
+                .tabItem {
+                    Image(systemName: "list.dash")
+                    Text("A")
+                }
                 
-                NavigationView{
+                NavigationView {
                     B1View(store: self.store.scope(
                         state: \.b1State,
                         action: TabBarAction.b1Action

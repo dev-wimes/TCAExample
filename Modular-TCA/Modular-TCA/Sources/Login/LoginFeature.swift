@@ -8,15 +8,15 @@
 import Foundation
 import ComposableArchitecture
 
-struct LoginState: Equatable{
+struct LoginState: Equatable {
 //    var logInResponse: String = ""
 }
 
-enum LoginAction{
+enum LoginAction {
     case logIn(Result<String, Never>)
 }
 
-struct LoginEnvironmnet{}
+struct LoginEnvironmnet { }
 
 let loginReducer = Reducer<
     LoginState,

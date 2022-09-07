@@ -8,19 +8,19 @@
 import Effects
 import ComposableArchitecture
 
-public struct A1State: Equatable{
-    public init(){}
+public struct A1State: Equatable {
+    public init() { }
     var resultString: String = ""
 }
 
-public enum A1Action: Equatable{
+public enum A1Action: Equatable {
     case onAppear
     case dataLoaded(Result<String, ApiError>)
 }
 
-public struct A1Environment{
+public struct A1Environment {
     
-    public init(){}
+    public init() { }
     
     var request: () -> Effect<String, ApiError> = {
         let effects: Effects = EffectsImpl()
@@ -36,15 +36,15 @@ public let a1Reducer = Reducer<
     A1State,
     A1Action,
     A1Environment
->{ state, action, environment in
-    switch action{
+> { state, action, environment in
+    switch action {
     case .onAppear:
         return environment.request()
             .receive(on: environment.mainQueue())
             .catchToEffect()
             .map(A1Action.dataLoaded)
     case .dataLoaded(let result):
-        switch result{
+        switch result {
         case .success(let result):
             state.resultString = result
         case .failure(let error):
@@ -54,7 +54,7 @@ public let a1Reducer = Reducer<
     }
 }
 
-func dummyA1Effect() -> Effect<String, ApiError>{
+func dummyA1Effect() -> Effect<String, ApiError> {
     let dummyString = "test"
     return Effect(value: dummyString)
 }

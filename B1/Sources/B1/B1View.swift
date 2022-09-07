@@ -13,13 +13,13 @@ public struct B1View: View {
     
     let store: Store<B1State, B1Action>
     
-    public init(store: Store<B1State, B1Action>){
+    public init(store: Store<B1State, B1Action>) {
         self.store = store
     }
     
     public var body: some View {
-        WithViewStore(self.store){ viewStore in
-            VStack{
+        WithViewStore(self.store) { viewStore in
+            VStack {
                 Text("login Data: "+viewStore.loginData)
                 Text(viewStore.resultString)
                 NavigationLink {
@@ -38,9 +38,3 @@ public struct B1View: View {
         }
     }
 }
-
-//struct SwiftUIView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SwiftUIView()
-//    }
-//}

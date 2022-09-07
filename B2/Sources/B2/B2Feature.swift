@@ -1,30 +1,30 @@
 import Effects
 import ComposableArchitecture
 
-public struct B2State: Equatable{
+public struct B2State: Equatable {
     var resultString: String
     
     public init(
         resultString: String
-    ){
+    ) {
         self.resultString = resultString
     }
 }
 
-public enum B2Action{
+public enum B2Action {
 //    case receiveOpenView
     case onAppear
     case dataLoaded(Result<String, ApiError>)
 }
 
-public struct B2Environment{
+public struct B2Environment {
     var request: () -> Effect<String, ApiError>
     var mainQueue: () -> AnySchedulerOf<DispatchQueue>
     
     public init(
         request: @escaping () -> Effect<String, ApiError>,
         mainQueue: @escaping () -> AnySchedulerOf<DispatchQueue>
-    ){
+    ) {
         self.request = request
         self.mainQueue = mainQueue
     }
@@ -34,8 +34,8 @@ public let b2Reducer = Reducer<
     B2State,
     B2Action,
     B2Environment
->{ state, action, environment in
-    switch action{
+> { state, action, environment in
+    switch action {
 //    case .receiveOpenView:
 //        return .none
     case .onAppear:
