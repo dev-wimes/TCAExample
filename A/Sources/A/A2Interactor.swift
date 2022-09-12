@@ -1,5 +1,5 @@
 //
-//  A2Feature.swift
+//  A2Interactor.swift
 //  
 //
 //  Created by Wimes on 2022/01/12.
@@ -11,11 +11,16 @@ import ComposableArchitecture
 
 public struct A2State: Equatable {
     var resultString: String
+    
+    init(resultString: String = "...") {
+        self.resultString = resultString
+    }
 }
 
 public enum A2Action: Equatable {
     case onAppear
     case dataLoaded(Result<String, ApiError>)
+    case didTapBack
 }
 
 public struct A2Environment {
@@ -46,6 +51,8 @@ public let a2Reducer = Reducer<
         state.resultString = result
         return .none
     case .dataLoaded(.failure(let error)):
+        return .none
+    case .didTapBack:
         return .none
     }
 }

@@ -18,9 +18,23 @@ public struct A2View: View {
                 Text("\(viewStore.resultString)")
             }
             .navigationTitle("A2")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    self.backButton(viewStore: viewStore)
+                }
+            }
             .onAppear {
                 viewStore.send(.onAppear)
             }
+        }
+    }
+    
+    @ViewBuilder
+    func backButton(viewStore: ViewStore<A2State, A2Action>) -> some View {
+        Button {
+            viewStore.send(.didTapBack)
+        } label: {
+            Image(systemName: "chevron.backward")
         }
     }
 }

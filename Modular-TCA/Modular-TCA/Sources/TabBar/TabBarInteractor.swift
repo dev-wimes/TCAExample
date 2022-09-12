@@ -1,5 +1,5 @@
 //
-//  TabBarFeature.swift
+//  TabBarInteractor.swift
 //  Modular-TCA
 //
 //  Created by Wimes on 2022/01/08.
@@ -48,6 +48,7 @@ let tabBarReducer = Reducer<
             state.b1State.loginData = state.loginData
             return .none
         default:
+            // @@
 //            return Effect<TabBarAction, Never>(value: .b2Action(.onAppear))
             return .none
         }

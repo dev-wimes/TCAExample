@@ -1,5 +1,5 @@
 //
-//  A1Feature.swift
+//  A1Interactor.swift
 //  
 //
 //  Created by Wimes on 2022/01/12.
@@ -10,13 +10,17 @@ import Effects
 import ComposableArchitecture
 
 public struct A1State: Equatable {
-    public init() { }
-    var resultString: String = ""
+    var resultString: String
+    
+    public init(resultString: String = "...") {
+        self.resultString = resultString
+    }
 }
 
 public enum A1Action: Equatable {
     case onAppear
     case dataLoaded(Result<String, ApiError>)
+    case didTapButton
 }
 
 public struct A1Environment {
@@ -51,6 +55,8 @@ public let a1Reducer = Reducer<
         case .failure(let error):
             break
         }
+        return .none
+    case .didTapButton:
         return .none
     }
 }

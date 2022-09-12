@@ -14,6 +14,19 @@ import B2
 struct TabBarView: View {
     let store: Store<TabBarState, TabBarAction>
     
+    init(store: Store<TabBarState, TabBarAction>) {
+        self.store = store
+        
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithTransparentBackground()
+        coloredAppearance.backgroundColor = .systemRed
+        coloredAppearance.titleTextAttributes = [.foregroundColor: Color.white]
+
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().compactAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+    }
+    
     var body: some View {
         WithViewStore(self.store) { viewStore in
             TabView {

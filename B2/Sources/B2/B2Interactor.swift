@@ -13,6 +13,7 @@ public struct B2State: Equatable {
 }
 
 public enum B2Action {
+    // @@
 //    case receiveOpenView
     case onAppear
     case dataLoaded(Result<String, ApiError>)
@@ -37,10 +38,11 @@ public let b2Reducer = Reducer<
     B2Environment
 > { state, action, environment in
     switch action {
+        // @@
 //    case .receiveOpenView:
 //        return .none
     case .onAppear:
-        print("### real B2 onAppear")
+        print("@@ real B2 onAppear")
         return environment.request()
             .receive(on: environment.mainQueue())
             .catchToEffect(B2Action.dataLoaded)

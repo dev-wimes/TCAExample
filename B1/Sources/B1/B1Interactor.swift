@@ -8,8 +8,9 @@ public struct B1State: Equatable {
     public var resultString: String = ""
     public var b2State = B2State(resultString: "")
     
+    // @@
     // 외부로 접근이 제한된 변수가 필요하다면 private으로 선언
-//    private internalData: String = ""
+    //    private internalData: String = ""
     public init() { }
 }
 
@@ -23,7 +24,7 @@ public enum B1Action {
 public struct B1Environment {
     var request: () -> Effect<String, ApiError>
     var mainQueue: () -> AnySchedulerOf<DispatchQueue>
-
+    
     public init(
         request: @escaping () -> Effect<String, ApiError>,
         mainQueue: @escaping () -> AnySchedulerOf<DispatchQueue>
@@ -46,7 +47,7 @@ public let b1Reducer = Reducer<
                     request: EffectsImpl().numbersApiFour,
                     mainQueue: { .main }
                 )
-        }),
+        } ),
     Reducer { state, action, environment in
         switch action {
         case .onAppear:

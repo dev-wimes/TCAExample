@@ -23,7 +23,8 @@ let package = Package(
         .target(
             name: "Effects",
             dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "TCACoordinators", package: "TCACoordinators")
             ]),
         .testTarget(
             name: "EffectsTests",

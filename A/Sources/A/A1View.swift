@@ -18,23 +18,15 @@ public struct A1View: View {
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
-            NavigationView {
-                VStack {
-                    Text(viewStore.resultString)
-                    NavigationLink {
-                        A2View(store: Store(
-                            initialState: A2State(resultString: ""),
-                            reducer: a2Reducer,
-                            environment: A2Environment(
-                                request: { EffectsImpl().numbersApiThree() },
-                                mainQueue: { .main }
-                            )))
-                    } label: {
-                        Text("open the A2 View")
-                    }
+            VStack {
+                Text(viewStore.resultString)
+                Button {
+                    viewStore.send(.didTapButton)
+                } label: {
+                    Text("open the A2 View")
                 }
-                .navigationTitle("A1")
             }
+            .navigationTitle("A1")
             .onAppear {
                 viewStore.send(.onAppear)
             }

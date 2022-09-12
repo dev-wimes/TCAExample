@@ -1,5 +1,5 @@
 //
-//  RootFeature.swift
+//  RootInteractor.swift
 //  Modular-TCA
 //
 //  Created by Wimes on 2022/01/08.
