@@ -33,7 +33,7 @@ let rootCoordinatorReducer: Reducer<
         Reducer { state, action, environment in
             switch action {
             case .routeAction(_, action: .login(.loggedIn(let loginData))):
-                state.routes.presentCover(.tabBar(.init(loginData: loginData)))
+                state.routes.presentCover(.tabBar(.init(loginData: loginData)), embedInNavigationView: true)
                 return .none
             case .routeAction(_, action: .tabBar(_)):
                 return .none

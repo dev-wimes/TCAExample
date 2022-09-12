@@ -47,9 +47,6 @@ struct TabBarView: View {
                     Text("B")
                 }
             }
-            .onAppear {
-                print("loginData: ", viewStore.loginData)
-            }
         }
     }
 }

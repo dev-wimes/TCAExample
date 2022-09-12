@@ -1,6 +1,6 @@
 # TCACoordinator
 
-이전 커밋&글: https://github.com/dev-wimes/TCAExample/tree/a335cd5bb4e616dc38e5d9e33ff17c063e81213b
+TCA101: https://github.com/dev-wimes/TCAExample/tree/a335cd5bb4e616dc38e5d9e33ff17c063e81213b
 
 ## 개요
 
@@ -113,7 +113,6 @@ TCACoordinator의 구성은 다음과 같다.
   * 피쳐의 State, Action, Reducer를 담고 있다. TCA기본 구성요소이므로 따로 설명은 필요없을 듯 하다.
 * Screen (view-less)
   * 각 모듈들을 가져와서 리듀서를 만들어주고 관리해주기 위함
-  * 따라서 View가 없다.
 * Coordinator
   * 본격적으로 화면이동, 흐름을 관리해준다.
 * View
@@ -297,7 +296,219 @@ let tabBarReducer: Reducer<
 
 ### RootCoordinator
 
+TCACoordinator예제를 보면 각 Coordinator마다 Screen과 Coordinator가 있다.
+Screen은 view-less이고 Coordinator는 viewable이다.
 
+**RootScreen**
+은 앞서 말했듯이 각 모듈들을 가져와서 리듀서를 만들어주고 관리만 해준다. 따라서 view가 없다.
+
+```swift
+enum RootScreenState: Equatable {
+    case login(LoginState)
+    case tabBar(TabBarState)
+}
+
+enum RootScreenAction {
+    case login(LoginAction)
+    case tabBar(TabBarAction)
+}
+
+struct RootScreenEnvironment { }
+
+let rootScreenReducer = Reducer<
+    RootScreenState,
+    RootScreenAction,
+    RootScreenEnvironment
+>.combine([
+    loginReducer.pullback(
+        state: /RootScreenState.login,
+        action: /RootScreenAction.login,
+        environment: { _ in LoginEnvironmnet() }
+    ),
+    tabBarReducer.pullback(
+        state: /RootScreenState.tabBar,
+        action: /RootScreenAction.tabBar,
+        environment: { _ in TabBarEnvironmnet() }
+    )
+])
+```
+
+
+
+**RootCoordinator**
+은 실제 화면간의 처리를 해준다. TCACoordinators를 import해야하며, `IndexedRouterState`, `IndextedRouterAction`을 상속받아서 State, Action을 구현해야 한다.
+
+```swift
+struct RootCoordinatorState: Equatable, IndexedRouterState {
+    var routes: [Route<RootScreenState>]
+    
+    init(routes: [Route<RootScreenState>] = [.root(.login(.init()))]) {
+        self.routes = routes
+    }
+}
+
+enum RootCoordinatorAction: IndexedRouterAction {
+    case routeAction(Int, action: RootScreenAction)
+    case updateRoutes([Route<RootScreenState>])
+}
+
+struct RootCoordinatorEnvironment { }
+```
+
+State에는 routes라는 Route 배열이 있다.
+화면이동은 이 routes를 이용해 하게 되는데 배열로 선언된 이유는 화면들을 관리하기 위함이다. 
+즉, 배열에 새로운 화면 State를 추가하면 push이고, 제거하면 pop이 되는 메커니즘이다.
+내부 메서드들을 보면 append, remove가 있는 것으로 봐서 위의 내용이 무엇인지 대충 어떤 느낌인지 알 수 있다.
+
+Action에는 `routeAction`, `updateRoutes`가 있다.
+프로토콜을 보면 다음과 같다.
+
+```swift
+public protocol IndexedRouterAction {
+
+  associatedtype Screen
+  associatedtype ScreenAction
+
+  /// Creates an action that allows routes to be updated whenever the user navigates back.
+  /// - Returns: An `IndexedScreenCoordinatorAction`, usually a case in an enum.
+  static func updateRoutes(_ screens: [Route<Screen>]) -> Self
+
+  /// Creates an action that allows the action for a specific screen to be dispatched to that screen's reducer.
+  /// - Returns: An `IndexedScreenCoordinatorAction`, usually a case in an enum.
+  static func routeAction(_ index: Int, action: ScreenAction) -> Self
+}
+
+```
+
+`routeAction`은 action이 발생했을 때 trigger된며, Int와 ScreenAction을 받게 된다.
+index는 해당 케이스를 트리거 시킨 시점에서 route의 count를 리턴한다.
+action은 해당 Action의 case를 받을 수 있다. 즉, 어떠한 action의 트리거를 받게 된다.
+
+`updateRoutes`는 RootCoordinatorState의 routes가 없어질 때(pop, dismiss 등)  Route 배열을 받게 된다.
+routes를 받게 되기 때문에 화면조작과 관련된 일을 할 수 있다.
+예를 들면 A2에서 back했을 때 B1을 push하라는 코드를 짜고 싶다면 다음과 같이 하면 된다.
+
+```swift
+....
+case .updateRoutes(let routes):
+	routes.push(.b1(.init()))
+	return .none
+}
+...
+```
+
+
+
+```swift
+let rootCoordinatorReducer: Reducer<
+    RootCoordinatorState,
+    RootCoordinatorAction,
+    RootCoordinatorEnvironment
+> = rootScreenReducer
+    .forEachIndexedRoute(environment: { _ in RootScreenEnvironment() })
+    .withRouteReducer(
+        Reducer { state, action, environment in
+            switch action {
+            case .routeAction(_, action: .login(.loggedIn(let loginData))):
+                state.routes.presentCover(.tabBar(.init(loginData: loginData)), embedInNavigationView: true)
+                return .none
+            case .routeAction(_, action: .tabBar(_)):
+                return .none
+            case .updateRoutes(_):
+                return .none
+            }
+        }
+    )
+```
+
+reducer에서는 `forEachIndexedRoute`와 `withRouteReducer`를 이용해 각 화면들을 관리한다.
+README에는 모든 `forEachIndexedRoute` route를 결합하고
+ `withRouteReduer` 에서 reducer 형태로 변환해서 
+모든 case에 대한 trigger를 받을 수 있도록 되어 있다.
+
+예제에는 `loggedIn` 트리거가 발생하면 tabBar를 띄우고 login성공 증거로 loginData를 주입해주고 있다.
+그리고 tabBar 부터는 navigationStack을 사용해야 하므로 embedInNavigationView을 true로 해준다.
+
+
+
+**RootCoordinatorView**
+
+아서 만든 Coordinator를 이용해 화면을 그릴 View를 만들어준다.
+
+```swift
+import SwiftUI
+import ComposableArchitecture
+import TCACoordinators
+
+
+struct RootCoordinatorView: View {
+    let store: Store<RootCoordinatorState, RootCoordinatorAction>
+    
+    var body: some View {
+        TCARouter(store) { screen in
+            SwitchStore(screen) {
+                CaseLet(
+                    state: /RootScreenState.login,
+                    action: RootScreenAction.login,
+                    then: LoginView.init
+                )
+                CaseLet(
+                    state: /RootScreenState.tabBar,
+                    action: RootScreenAction.tabBar,
+                    then: TabBarView.init
+                )
+            }
+        }
+    }
+}
+```
+
+TCARouter로 한번 감싸고 TCA예제에서 봤던 SwitchStore, CaseLet을 이용해 case별로 화면이 변경될 것을 암시 해준다.
+
+
+
+**RootView, @main**
+
+마지막으로 CoordinatorView를 RootView에서 생성해주고, RootView는 main에서 나오도록 한다.
+
+```swift
+struct RootView: View {
+    var body: some View {
+        RootCoordinatorView(store: .init(
+            initialState: .init(),
+            reducer: rootCoordinatorReducer,
+            environment: RootCoordinatorEnvironment()
+        ))
+    }
+}
+```
+
+```swift
+@main
+struct Modular_TCAApp: App {
+    var body: some Scene {
+        WindowGroup {
+            RootView()
+        }
+    }
+}
+```
+
+![Simulator Screen Recording - iPhone 12 Pro - 2022-09-13 at 00.06.16](README.assets/TCACoordinators.gif)
+
+
+
+## Reference
+
+* https://green1229.tistory.com/272?utm_source=pocket_mylist
+* https://github.com/johnpatrickmorgan/TCACoordinators
+* https://velog.io/@frankjinhan/RIBs-Flattening
+
+## What is Next
+
+피쳐를 SPM으로 나누면해당 피쳐만 독립적으로 실행시킬 수 없다. 이러면 모듈화의 의미가 없어진다.
+첫번째로 의존성을 끊어내는 작업을 진행할 것이다. State, Action, Environment, reducer를 추상화 시켜서 모듈별로 약한 의존성을 갖게 할 것이다.
+각 피쳐별로 Demo.xcodeproj를 만들어서 Demo App까지 돌리는 것이 다음 목표이다.
 
 
 
