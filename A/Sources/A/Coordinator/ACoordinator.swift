@@ -22,9 +22,11 @@ public enum ACoordinatorAction: IndexedRouterAction {
     case updateRoutes([Route<AScreenState>])
 }
 
-public struct ACoordinatorEnvironment {}
+public struct ACoordinatorEnvironment {
+    public init() { }
+}
 
-public let coordinatorReducer: Reducer<
+public let aCoordinatorReducer: Reducer<
     ACoordinatorState,
     ACoordinatorAction,
     ACoordinatorEnvironment

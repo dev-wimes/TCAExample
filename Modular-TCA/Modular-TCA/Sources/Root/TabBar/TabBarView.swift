@@ -17,22 +17,23 @@ struct TabBarView: View {
     init(store: Store<TabBarState, TabBarAction>) {
         self.store = store
         
-        let coloredAppearance = UINavigationBarAppearance()
-        coloredAppearance.configureWithTransparentBackground()
-        coloredAppearance.backgroundColor = .systemRed
-        coloredAppearance.titleTextAttributes = [.foregroundColor: Color.white]
-
-        UINavigationBar.appearance().standardAppearance = coloredAppearance
-        UINavigationBar.appearance().compactAppearance = coloredAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+        // @@ 사용하면 앱이 죽는다.
+//        let coloredAppearance = UINavigationBarAppearance()
+//        coloredAppearance.configureWithTransparentBackground()
+//        coloredAppearance.backgroundColor = .systemRed
+//        coloredAppearance.titleTextAttributes = [.foregroundColor: Color.white]
+//
+//        UINavigationBar.appearance().standardAppearance = coloredAppearance
+//        UINavigationBar.appearance().compactAppearance = coloredAppearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
     }
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
             TabView {
-                A1View(store: self.store.scope(
-                    state: \.a1State,
-                    action: TabBarAction.a1Action
+                ACoordinatorView(store: self.store.scope(
+                    state: \.a,
+                    action: TabBarAction.a
                 ))
                 .tabItem {
                     Image(systemName: "list.dash")
