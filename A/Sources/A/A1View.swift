@@ -26,7 +26,7 @@ public struct A1View: View {
                     Text("open the A2 View")
                 }
             }
-            .navigationTitle("A1")
+            .navigationBarTitle("A1", displayMode: .inline)
             .onAppear {
                 viewStore.send(.onAppear)
             }

@@ -17,15 +17,14 @@ struct TabBarView: View {
     init(store: Store<TabBarState, TabBarAction>) {
         self.store = store
         
-        // @@ 사용하면 앱이 죽는다.
-//        let coloredAppearance = UINavigationBarAppearance()
-//        coloredAppearance.configureWithTransparentBackground()
-//        coloredAppearance.backgroundColor = .systemRed
-//        coloredAppearance.titleTextAttributes = [.foregroundColor: Color.white]
-//
-//        UINavigationBar.appearance().standardAppearance = coloredAppearance
-//        UINavigationBar.appearance().compactAppearance = coloredAppearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+        let navigationAppearance = UINavigationBarAppearance()
+        navigationAppearance.configureWithTransparentBackground()
+        navigationAppearance.backgroundColor = .systemRed
+        
+        UINavigationBar.appearance().standardAppearance = navigationAppearance
+        UINavigationBar.appearance().compactAppearance = navigationAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationAppearance
+        UINavigationBar.appearance().tintColor = .black
     }
     
     var body: some View {
@@ -50,6 +49,9 @@ struct TabBarView: View {
                     Image(systemName: "list.dash")
                     Text("B")
                 }
+            }
+            .onAppear {
+                print("loginData: ", viewStore.loginData)
             }
         }
     }

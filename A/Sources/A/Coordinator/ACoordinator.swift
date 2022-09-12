@@ -34,16 +34,16 @@ public let aCoordinatorReducer: Reducer<
     .forEachIndexedRoute(environment: { _ in AScreenEnvironment() })
     .withRouteReducer(
         Reducer { state, action, environment in
-          switch action {
-          case .routeAction(_, action: .a1(.didTapButton)):
-              state.routes.push(.a2(.init()))
-            return .none
-          case .routeAction(_, action: .a2(.didTapBack)):
-            state.routes.pop()
-            return .none
-          default:
-            return .none
-          }
+            switch action {
+            case .routeAction(_, action: .a1(.didTapButton)):
+                state.routes.push(.a2(.init()))
+                return .none
+            case .routeAction(_, action: .a2(.didTapBack)):
+                state.routes.pop()
+                return .none
+            default:
+                return .none
+            }
         }
-      )
+    )
 

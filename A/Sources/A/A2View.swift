@@ -17,25 +17,28 @@ public struct A2View: View {
             VStack {
                 Text("\(viewStore.resultString)")
             }
-            .navigationTitle("A2")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    self.backButton(viewStore: viewStore)
-                }
-            }
+            .navigationBarTitle("A2", displayMode: .inline)
+            // @@
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    self.backButton(viewStore: viewStore)
+//                }
+//            }
+//            .navigationBarBackButtonHidden(true)
             .onAppear {
                 viewStore.send(.onAppear)
             }
         }
     }
     
-    @ViewBuilder
-    func backButton(viewStore: ViewStore<A2State, A2Action>) -> some View {
-        Button {
-            viewStore.send(.didTapBack)
-        } label: {
-            Image(systemName: "chevron.backward")
-        }
-    }
+    // @@
+//    @ViewBuilder
+//    func backButton(viewStore: ViewStore<A2State, A2Action>) -> some View {
+//        Button {
+//            viewStore.send(.didTapBack)
+//        } label: {
+//            Image(systemName: "chevron.backward")
+//        }
+//    }
 }
 
