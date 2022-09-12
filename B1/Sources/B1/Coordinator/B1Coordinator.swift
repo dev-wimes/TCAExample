@@ -11,8 +11,7 @@ import TCACoordinators
 public struct BCoordinatorState: Equatable, IndexedRouterState {
     public var routes: [Route<BScreenState>]
     
-    public init(
-        routes: [Route<BScreenState>] = [.root(.b1(.init()), embedInNavigationView: true)]) {
+    public init(routes: [Route<BScreenState>]) {
         self.routes = routes
     }
 }

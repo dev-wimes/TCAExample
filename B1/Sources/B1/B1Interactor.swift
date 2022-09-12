@@ -3,10 +3,12 @@ import Effects
 import ComposableArchitecture
 
 public struct B1State: Equatable {
-    public var loginData: String = "empty"
+    public var loginData: String
     public var resultString: String = "..."
     
-    public init() { }
+    public init(loginData: String) {
+        self.loginData = loginData
+    }
 }
 
 public enum B1Action {

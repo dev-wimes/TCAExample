@@ -15,7 +15,12 @@ struct TabBarState: Equatable {
     var loginData: String
     
     var a = ACoordinatorState()
-    var b = BCoordinatorState()
+    var b: BCoordinatorState
+    
+    init(loginData: String) {
+        self.loginData = loginData
+        self.b = BCoordinatorState(routes: [.root(.b1(.init(loginData: loginData)))])
+    }
 }
 
 enum TabBarAction {

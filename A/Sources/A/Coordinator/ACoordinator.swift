@@ -17,7 +17,6 @@ public struct ACoordinatorState: Equatable, IndexedRouterState {
 }
 
 public enum ACoordinatorAction: IndexedRouterAction {
-    // @@ Int가 왜 들어갈까?
     case routeAction(Int, action: AScreenAction)
     case updateRoutes([Route<AScreenState>])
 }
