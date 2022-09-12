@@ -27,7 +27,8 @@ public struct ACoordinatorEnvironment {}
 public let coordinatorReducer: Reducer<
     ACoordinatorState,
     ACoordinatorAction,
-    ACoordinatorEnvironment> = aScreenReducer
+    ACoordinatorEnvironment
+> = aScreenReducer
     .forEachIndexedRoute(environment: { _ in AScreenEnvironment() })
     .withRouteReducer(
         Reducer { state, action, environment in
