@@ -15,12 +15,12 @@ struct TabBarState: Equatable {
     var loginData: String
     
     var a = ACoordinatorState()
-    var b1State = B1State()
+    var b = BCoordinatorState()
 }
 
 enum TabBarAction {
     case a(ACoordinatorAction)
-    case b1Action(B1Action)
+    case b(BCoordinatorAction)
 }
 
 struct TabBarEnvironmnet { }
@@ -32,17 +32,14 @@ let tabBarReducer: Reducer<
 > = .combine(
     aCoordinatorReducer
         .pullback(
-            state: \TabBarState.a,
+            state: \.a,
             action: /TabBarAction.a,
             environment: { _ in .init() }
         ),
-    b1Reducer
+    bCoordinatorReducer
         .pullback(
-            state: \.b1State,
-            action: /TabBarAction.b1Action,
-            environment: { _ in .init(
-                request: { EffectsImpl().numbersApiTwo() },
-                mainQueue: { .main }
-            )}
+            state: \.b,
+            action: /TabBarAction.b,
+            environment: { _ in .init() }
         )
 )

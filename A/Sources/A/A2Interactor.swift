@@ -43,6 +43,7 @@ public let a2Reducer = Reducer<
 > { state, action, environment in
     switch action {
     case .onAppear:
+        state.resultString = "..."
         return environment.request()
             .receive(on: environment.mainQueue())
             .catchToEffect()

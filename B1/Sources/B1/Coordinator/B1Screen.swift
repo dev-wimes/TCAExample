@@ -8,24 +8,24 @@
 import ComposableArchitecture
 import Effects
 
-public enum B1ScreenState: Equatable {
+public enum BScreenState: Equatable {
     case b1(B1State)
 }
 
-public enum B1ScreenAction {
+public enum BScreenAction {
     case b1(B1Action)
 }
 
-public struct B1ScreenEnvironment { }
+public struct BScreenEnvironment { }
 
-public let b1ScreenReducer = Reducer<
-    B1ScreenState,
-    B1ScreenAction,
-    B1ScreenEnvironment
+public let bScreenReducer = Reducer<
+    BScreenState,
+    BScreenAction,
+    BScreenEnvironment
 >.combine([
     b1Reducer.pullback(
-        state: /B1ScreenState.b1,
-        action: /B1ScreenAction.b1,
+        state: /BScreenState.b1,
+        action: /BScreenAction.b1,
         environment: { _ in .init(
             request: { EffectsImpl().numbersApiTwo() },
             mainQueue: { .main }

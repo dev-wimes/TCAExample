@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ComposableArchitecture
-import B2
 
 public struct B1View: View {
     
@@ -22,14 +21,6 @@ public struct B1View: View {
             VStack {
                 Text("login Data: "+viewStore.loginData)
                 Text(viewStore.resultString)
-                NavigationLink {
-                    B2View(store: self.store.scope(
-                            state: \.b2State,
-                            action: B1Action.b2Action
-                        ))
-                } label: {
-                    Text("Open the B2View")
-                }
             }
             .navigationTitle("B1")
             .onAppear {

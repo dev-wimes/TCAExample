@@ -10,13 +10,12 @@ let package = Package(
         .library(name: "B1", targets: ["B1"])
     ],
     dependencies: [
-        .package(name: "Effects", path: "../Effects"),
-        .package(name: "B2", path: "../B2")
+        .package(name: "Effects", path: "../Effects")
     ],
     targets: [
         .target(
             name: "B1",
-            dependencies: ["Effects", "B2"]),
+            dependencies: []),
         .testTarget(
             name: "B1Tests",
             dependencies: ["B1"]),

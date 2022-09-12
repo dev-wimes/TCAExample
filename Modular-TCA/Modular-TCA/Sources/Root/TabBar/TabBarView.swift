@@ -9,7 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 import A
 import B1
-import B2
 
 struct TabBarView: View {
     let store: Store<TabBarState, TabBarAction>
@@ -39,12 +38,10 @@ struct TabBarView: View {
                     Text("A")
                 }
                 
-                NavigationView {
-                    B1View(store: self.store.scope(
-                        state: \.b1State,
-                        action: TabBarAction.b1Action
-                    ))
-                }
+                BCoordinatorView(store: self.store.scope(
+                    state: \.b,
+                    action: TabBarAction.b
+                ))
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("B")
