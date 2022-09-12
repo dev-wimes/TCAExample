@@ -8,29 +8,18 @@
 import Foundation
 import ComposableArchitecture
 
-struct LoginState: Equatable {
-    // @@
-//    var logInResponse: String = ""
-}
+struct LoginState: Equatable { }
 
 enum LoginAction {
-    case logIn(Result<String, Never>)
+    case loggedIn(loginData: String)
 }
 
 struct LoginEnvironmnet { }
 
-let loginReducer = Reducer<
+let loginReducer: Reducer<
     LoginState,
     LoginAction,
     LoginEnvironmnet
->{ state, action, envrionment in
+> = Reducer { _, _, _ in
     return .none
-    // @@
-//    switch action{
-//    case .onAppear:
-//        return .none
-//    case .logIn(.success(let response)):
-////        state.logInResponse = response
-//        return .none
-//    }
 }

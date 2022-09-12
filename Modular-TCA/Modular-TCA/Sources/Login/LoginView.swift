@@ -16,7 +16,7 @@ struct LoginView: View {
         WithViewStore(self.store){ viewStore in
             VStack {
                 Button {
-                    viewStore.send(.logIn(.success("wimes")))
+                    viewStore.send(.loggedIn(loginData: "I'm Signed In!"))
                 } label: {
                     Text("logIn")
                 }

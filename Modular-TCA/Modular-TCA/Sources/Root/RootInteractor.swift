@@ -22,30 +22,10 @@ enum RootAction {
 
 struct RootEnvironment { }
 
-let rootReducer = Reducer<
+let rootReducer: Reducer<
     RootState,
     RootAction,
     RootEnvironment
->.combine(
-    loginReducer.pullback(
-        state: /RootState.login,
-        action: /RootAction.loginAction,
-        environment: { _ in LoginEnvironmnet() }
-    ),
-    tabBarReducer.pullback(
-        state: /RootState.tabBar,
-        action: /RootAction.tabBarAction,
-        environment: { _ in TabBarEnvironmnet() }
-    ),
-    Reducer { state, action, _ in
-        switch action {
-        case .loginAction(.logIn(.success(let response))):
-            state = .tabBar(.init(loginData: response))
-            return .none
-        case .loginAction:
-            return .none
-        case .tabBarAction:
-            return .none
-        }
-    }
-)
+> = Reducer { _, _, _ in
+    return .none
+}

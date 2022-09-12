@@ -32,8 +32,8 @@ let rootCoordinatorReducer: Reducer<
     .withRouteReducer(
         Reducer { state, action, environment in
             switch action {
-            case .routeAction(_, action: .login(.logIn(.success(let response)))):
-                state.routes.presentCover(.tabBar(.init(loginData: response)))
+            case .routeAction(_, action: .login(.loggedIn(let loginData))):
+                state.routes.presentCover(.tabBar(.init(loginData: loginData)))
                 return .none
             case .routeAction(_, action: .tabBar(_)):
                 return .none

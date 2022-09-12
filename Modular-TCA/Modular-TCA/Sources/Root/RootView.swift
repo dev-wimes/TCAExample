@@ -16,13 +16,10 @@ struct RootView: View {
     }
     
     var body: some View {
-        SwitchStore(self.store) {
-            CaseLet(state: /RootState.login, action: RootAction.loginAction) { store in
-                LoginView(store: store)
-            }
-            CaseLet(state: /RootState.tabBar, action: RootAction.tabBarAction) { store in
-                TabBarView(store: store)
-            }
-        }
+        RootCoordinatorView(store: .init(
+            initialState: .init(),
+            reducer: rootCoordinatorReducer,
+            environment: RootCoordinatorEnvironment()
+        ))
     }
 }

@@ -25,32 +25,41 @@ enum TabBarAction {
 
 struct TabBarEnvironmnet { }
 
-let tabBarReducer = Reducer<
+let tabBarReducer: Reducer<
     TabBarState,
     TabBarAction,
     TabBarEnvironmnet
->.combine(
-    a1Reducer.pullback(
-        state: \.a1State,
-        action: /TabBarAction.a1Action,
-        environment: { _ in .init() }
-    ),
-    b1Reducer.pullback(
-        state: \.b1State,
-        action: /TabBarAction.b1Action,
-        environment: { _ in .init(
-            request: { EffectsImpl().numbersApiTwo() },
-            mainQueue: { .main }
-        )}),
-    Reducer { state, action, _ in
-        switch action {
-        case .b1Action(.onAppear):
-            state.b1State.loginData = state.loginData
-            return .none
-        default:
-            // @@
-//            return Effect<TabBarAction, Never>(value: .b2Action(.onAppear))
-            return .none
-        }
-    }
-)
+> = Reducer { _, _, _ in
+    return .none
+}
+
+// @@
+//let tabBarReducer = Reducer<
+//    TabBarState,
+//    TabBarAction,
+//    TabBarEnvironmnet
+//>.combine(
+//    a1Reducer.pullback(
+//        state: \.a1State,
+//        action: /TabBarAction.a1Action,
+//        environment: { _ in .init() }
+//    ),
+//    b1Reducer.pullback(
+//        state: \.b1State,
+//        action: /TabBarAction.b1Action,
+//        environment: { _ in .init(
+//            request: { EffectsImpl().numbersApiTwo() },
+//            mainQueue: { .main }
+//        )}),
+//    Reducer { state, action, _ in
+//        switch action {
+//        case .b1Action(.onAppear):
+//            state.b1State.loginData = state.loginData
+//            return .none
+//        default:
+//            // @@
+////            return Effect<TabBarAction, Never>(value: .b2Action(.onAppear))
+//            return .none
+//        }
+//    }
+//)
