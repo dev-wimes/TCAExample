@@ -1,4 +1,4 @@
-**이전글:** TCA101: https://github.com/dev-wimes/TCAExample/tree/a335cd5bb4e616dc38e5d9e33ff17c063e81213b
+**이전글:** TCA101- https://github.com/dev-wimes/TCAExample/tree/a335cd5bb4e616dc38e5d9e33ff17c063e81213b
 # TCACoordinator
 
 ## 개요
