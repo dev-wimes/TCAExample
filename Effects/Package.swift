@@ -12,11 +12,11 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/pointfreeco/swift-composable-architecture",
-            .upToNextMajor(from: "0.36.0")
+            from: "0.40.2"
         ),
         .package(
             url: "https://github.com/johnpatrickmorgan/TCACoordinators",
-            .upToNextMajor(from: "0.2.0")
+            from: "0.2.0"
         ),
     ],
     targets: [
