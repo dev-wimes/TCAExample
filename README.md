@@ -199,8 +199,8 @@ init(store: Store<TabBarState, TabBarAction>) {
 }
 ```
 
-우선은 navigation의 root(앱 전체의 Root를 의미하는 게 아님. NavigationStack에서 TabBar가 시작점이라 Root라 한 것.)에서는 Appearance정도 변경할 수 있는 것 같다.
-위 코드를 작성하면 하위 navigation들에게 전부 영향을 받는다.
+navigation의 root에서는 Appearance정도 변경할 수 있는 것 같다.
+위 코드를 작성하면 하위 navigation들에게 전부 영향을 준다.
 
 > **번외**
 >
