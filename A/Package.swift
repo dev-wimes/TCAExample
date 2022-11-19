@@ -10,14 +10,15 @@ let package = Package(
         .library(name: "A", targets: ["A"]),
     ],
     dependencies: [
-        .package(name: "Effects", path: "../Effects")
+        .package(name: "WMPlatform", path: "../WMPlatform"),
     ],
     targets: [
         .target(
             name: "A",
-            dependencies: ["Effects"]),
-        .testTarget(
-            name: "ATests",
-            dependencies: ["A"]),
+            dependencies: [
+                .product(name: "WMNetwork", package: "WMPlatform"),
+                .product(name: "NumberRepository", package: "WMPlatform")
+            ]
+        ),
     ]
 )

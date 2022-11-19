@@ -12,7 +12,10 @@ import ComposableArchitecture
 struct Modular_TCAApp: App {
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(store: Store(
+                initialState: RootFeature.State(),
+                reducer: RootFeature()
+            ))
         }
     }
 }

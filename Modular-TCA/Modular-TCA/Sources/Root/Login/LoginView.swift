@@ -10,7 +10,11 @@ import ComposableArchitecture
 
 struct LoginView: View {
     
-    let store: Store<LoginState, LoginAction>
+    let store: StoreOf<LoginFeature>
+    
+    init(store: StoreOf<LoginFeature>) {
+        self.store = store
+    }
     
     var body: some View {
         WithViewStore(self.store){ viewStore in

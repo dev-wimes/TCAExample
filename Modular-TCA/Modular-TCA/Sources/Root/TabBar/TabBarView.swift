@@ -11,9 +11,9 @@ import A
 import B1
 
 struct TabBarView: View {
-    let store: Store<TabBarState, TabBarAction>
+    let store: StoreOf<TabBarFeature>
     
-    init(store: Store<TabBarState, TabBarAction>) {
+    init(store: StoreOf<TabBarFeature>) {
         self.store = store
         
         let navigationAppearance = UINavigationBarAppearance()
@@ -29,18 +29,18 @@ struct TabBarView: View {
     var body: some View {
         WithViewStore(self.store) { viewStore in
             TabView {
-                ACoordinatorView(store: self.store.scope(
-                    state: \.a,
-                    action: TabBarAction.a
+                A1View(store: self.store.scope(
+                    state: \.a1,
+                    action: TabBarFeature.Action.a1
                 ))
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("A")
                 }
                 
-                BCoordinatorView(store: self.store.scope(
-                    state: \.b,
-                    action: TabBarAction.b
+                B1View(store: self.store.scope(
+                    state: \.b1,
+                    action: TabBarFeature.Action.b1
                 ))
                 .tabItem {
                     Image(systemName: "list.dash")

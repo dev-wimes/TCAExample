@@ -7,12 +7,11 @@
 
 import SwiftUI
 import ComposableArchitecture
-import Effects
 
 public struct A1View: View {
-    let store: Store<A1State, A1Action>
+    let store: StoreOf<A1Feature>
     
-    public init(store: Store<A1State, A1Action>) {
+    public init(store: StoreOf<A1Feature>) {
         self.store = store
     }
     
@@ -20,14 +19,21 @@ public struct A1View: View {
         WithViewStore(self.store) { viewStore in
             VStack {
                 Text(viewStore.resultString)
-                Button {
-                    viewStore.send(.didTapButton)
+                NavigationLink {
+                    IfLetStore(
+                        self.store.scope(
+                            state: \.a2,
+                            action: A1Feature.Action.a2)
+                    ) { store in
+                        A2View(store: store)
+                    }
                 } label: {
                     Text("open the A2 View")
                 }
             }
             .navigationBarTitle("A1", displayMode: .inline)
             .onAppear {
+                print("@@ View.onAppear")
                 viewStore.send(.onAppear)
             }
         }

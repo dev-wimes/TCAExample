@@ -9,11 +9,30 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RootView: View {
+    private let store: StoreOf<RootFeature>
+    
+    init(store: StoreOf<RootFeature>) {
+        self.store = store
+    }
+    
     var body: some View {
-        RootCoordinatorView(store: .init(
-            initialState: .init(),
-            reducer: rootCoordinatorReducer,
-            environment: RootCoordinatorEnvironment()
-        ))
+        SwitchStore(self.store) {
+            CaseLet(
+                state: /RootFeature.State.login,
+                action: RootFeature.Action.login
+            ) { store in
+                NavigationView {
+                    LoginView(store: store)
+                }
+            }
+            CaseLet(
+                state: /RootFeature.State.tabBar,
+                action: RootFeature.Action.tabBar
+            ) { store in
+                NavigationView {
+                    TabBarView(store: store)
+                }
+            }
+        }
     }
 }

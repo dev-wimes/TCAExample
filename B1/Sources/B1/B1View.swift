@@ -10,9 +10,9 @@ import ComposableArchitecture
 
 public struct B1View: View {
     
-    let store: Store<B1State, B1Action>
+    let store: StoreOf<B1Feature>
     
-    public init(store: Store<B1State, B1Action>) {
+    public init(store: StoreOf<B1Feature>) {
         self.store = store
     }
     

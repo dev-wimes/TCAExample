@@ -10,12 +10,16 @@ import ComposableArchitecture
 
 public struct A2View: View {
     
-    let store: Store<A2State, A2Action>
+    let store: StoreOf<A2Feature>
+    
+    public init(store: StoreOf<A2Feature>) {
+        self.store = store
+    }
     
     public var body: some View {
         WithViewStore(self.store) { viewStore in
             VStack {
-                Text("\(viewStore.resultString)")
+                Text(viewStore.resultString)
             }
             .navigationBarTitle("A2", displayMode: .inline)
             .onAppear {
