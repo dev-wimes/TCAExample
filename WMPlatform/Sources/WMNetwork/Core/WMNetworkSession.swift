@@ -19,18 +19,22 @@ public extension WMNetworkSession {
             sessionConfig.timeoutIntervalForRequest = 60.0
             sessionConfig.timeoutIntervalForResource = 60.0
             let session = URLSession(configuration: sessionConfig)
-
+            
             let (data, response) = try await session.data(for: api.request)
-
+            
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(NetworkError.unknown)
             }
-
+            
             if httpResponse.statusCode >= 200, httpResponse.statusCode < 300 {
-                guard let model = try? JSONDecoder().decode(T.self, from: data) else {
+                if let resultString = String(data: data, encoding: .utf8),
+                   let result = resultString as? T {
+                    return .success(result)
+                } else if let result = try? JSONDecoder().decode(T.self, from: data) {
+                    return .success(result)
+                } else {
                     return .failure(NetworkError.parsing)
                 }
-                return .success(model)
             } else {
                 return .failure(NetworkError.badRequest)
             }

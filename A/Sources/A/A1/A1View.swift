@@ -33,7 +33,6 @@ public struct A1View: View {
             }
             .navigationBarTitle("A1", displayMode: .inline)
             .onAppear {
-                print("@@ View.onAppear")
                 viewStore.send(.onAppear)
             }
         }

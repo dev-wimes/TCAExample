@@ -20,7 +20,6 @@ public final class NumberRepositoryImpl: WMNetworkSession, NumberRepository {
     public init() { }
     
     public func one() async -> TaskResult<String> {
-        print("@@ \(#function)")
         return await self.request(NumberTarget.one)
     }
     

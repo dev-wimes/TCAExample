@@ -50,7 +50,7 @@ extension B1Feature {
                 case let .success(result):
                     state.resultString = result
                 case let .failure(error):
-                    print("## \(error)")
+                    print("## error: \(error)")
                     break
                 }
                 

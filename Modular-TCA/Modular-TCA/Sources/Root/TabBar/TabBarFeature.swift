@@ -30,6 +30,9 @@ struct TabBarFeature: ReducerProtocol {
         Scope(state: \.b1, action: /Action.b1) {
             B1Feature()
         }
+        Reduce { _, _ in
+            return .none
+        }
     }
 }
 

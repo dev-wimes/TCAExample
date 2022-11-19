@@ -31,5 +31,17 @@ struct RootFeature: ReducerProtocol {
                 return .none
             }
         }
+        .ifCaseLet(
+            /State.login,
+             action: /Action.login
+        ) {
+            LoginFeature()
+        }
+        .ifCaseLet(
+            /State.tabBar,
+             action: /Action.tabBar
+        ) {
+            TabBarFeature()
+        }
     }
 }

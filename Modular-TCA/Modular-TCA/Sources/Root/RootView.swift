@@ -9,11 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RootView: View {
-    private let store: StoreOf<RootFeature>
-    
-    init(store: StoreOf<RootFeature>) {
-        self.store = store
-    }
+    private let store = Store(initialState: RootFeature.State(), reducer: RootFeature())
     
     var body: some View {
         SwitchStore(self.store) {

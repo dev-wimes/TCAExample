@@ -29,7 +29,7 @@ extension BaseTargetType {
     var url: URL {
         var components = URLComponents()
 
-        components.scheme = "https"
+        components.scheme = "http"
         components.host = baseUrl
         components.path = path
         components.queryItems = []
