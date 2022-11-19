@@ -1,3 +1,5 @@
+**현재 [TCA 0.44](https://github.com/pointfreeco/swift-composable-architecture/releases/tag/0.44.1) 대응이 안되어 있는 상태입니다.**
+
 **이전글:** TCA101- https://github.com/dev-wimes/TCAExample/tree/a335cd5bb4e616dc38e5d9e33ff17c063e81213b
 # TCACoordinator
 
